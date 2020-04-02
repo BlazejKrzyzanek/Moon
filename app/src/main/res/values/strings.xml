@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Moon</string>
+    <string name="title">Fazy księżyca</string>
+    <string name="today">Dzisiaj: </string>
+    <string name="last_new_moon">Poprzedni nów: </string>
+    <string name="next_full_moon">Następna pełnia: </string>
+    <string name="full_moons_in_year">Pełnie w roku</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="_2020">2020</string>
+</resources>
