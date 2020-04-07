@@ -41,32 +41,32 @@ class AllPhasesActivity : AppCompatActivity() {
                      yearValue = change.toInt()
                 } catch (e : NumberFormatException)
                 {
-                    yearValue = 2099
+                    yearValue = 2200
                     v.text = yearValue.toString()
 
                     Toast.makeText(
                         this@AllPhasesActivity,
-                        "Wybierz rok przed 2100!",
+                        "Wybierz rok przed 2201!",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
-                if (yearValue < 1971) {
-                    yearValue = 1971
+                if (yearValue < 1900) {
+                    yearValue = 1900
                     v.text = yearValue.toString()
 
                     Toast.makeText(
                         this@AllPhasesActivity,
-                        "Wybierz rok po 1970!",
+                        "Wybierz rok po 1899!",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if (yearValue > 2099) {
-                    yearValue = 2099
+                } else if (yearValue > 2200) {
+                    yearValue = 2200
                     v.text = yearValue.toString()
 
                     Toast.makeText(
                         this@AllPhasesActivity,
-                        "Wybierz rok przed 2100!",
+                        "Wybierz rok przed 2201!",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -85,12 +85,12 @@ class AllPhasesActivity : AppCompatActivity() {
             var yearValue: Int = year.text.toString().toInt()
             yearValue++
 
-            if (yearValue > 2099) {
-                yearValue = 2099
+            if (yearValue > 2200) {
+                yearValue = 2200
 
                 Toast.makeText(
                     this@AllPhasesActivity,
-                    "Wybierz rok przed 2100!",
+                    "Wybierz rok przed 2201!",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -105,12 +105,12 @@ class AllPhasesActivity : AppCompatActivity() {
             var yearValue: Int = year.text.toString().toInt()
             yearValue--
 
-            if (yearValue < 1971) {
-                yearValue = 1971
+            if (yearValue < 1900) {
+                yearValue = 1900
 
                 Toast.makeText(
                     this@AllPhasesActivity,
-                    "Wybierz rok po 1970!",
+                    "Wybierz rok po 1899!",
                     Toast.LENGTH_SHORT
                 ).show()
             }
