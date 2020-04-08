@@ -23,9 +23,7 @@ class SavedSettings {
         return "Saved settings: $hemisphere $algorithm"
     }
 
-    fun toCSV() : String {
+    fun toCSV(): String {
         return "$hemisphere;$algorithm\n"
     }
-
-
 }

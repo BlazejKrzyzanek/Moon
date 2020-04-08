@@ -1,7 +1,10 @@
 package com.bkrz.moon
 
 import java.util.*
-import kotlin.math.*
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 
 class PhaseCalculator {
@@ -102,9 +105,9 @@ class PhaseCalculator {
         var oldJ = 0
         while (jday < thisJD) {
             var F = F0 + 1.530588 * phase
-            var M5 = (M0 + phase * 29.10535608) * degToRad
-            var M6 = (M1 + phase * 385.81691806) * degToRad
-            var B6 = (B1 + phase * 390.67050646) * degToRad
+            val M5 = (M0 + phase * 29.10535608) * degToRad
+            val M6 = (M1 + phase * 385.81691806) * degToRad
+            val B6 = (B1 + phase * 390.67050646) * degToRad
             F -= 0.4068 * Math.sin(M6) + (0.1734 - 0.000393 * T) * Math.sin(M5)
             F += 0.0161 * Math.sin(2 * M6) + 0.0104 * Math.sin(2 * B6)
             F -= 0.0074 * Math.sin(M5 - M6) - 0.0051 * Math.sin(M5 + M6)

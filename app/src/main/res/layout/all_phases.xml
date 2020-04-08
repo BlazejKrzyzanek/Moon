@@ -45,7 +45,7 @@
             android:background="@drawable/btn_circle"
             android:text="@string/minus"
             android:textColor="@color/colorAccentLight"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
     </LinearLayout>
 
