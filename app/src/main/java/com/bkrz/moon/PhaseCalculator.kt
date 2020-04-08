@@ -9,7 +9,7 @@ import kotlin.math.sin
 
 class PhaseCalculator {
 
-    private val daysInCycle = 30.0
+    private val daysInCycle = 29.53083
 
     fun calculate(
         algorithm: Algorithm,
@@ -78,8 +78,8 @@ class PhaseCalculator {
             r -= 4
         else
             r -= 8.3
-        r = floor(r + 0.5) % 30
-        return if (r < 0) (r + 30) else r
+        r = floor(r + 0.5) % daysInCycle
+        return if (r < 0) (r + daysInCycle) else r
     }
 
     fun trig1(date: Calendar): Double {
@@ -112,12 +112,12 @@ class PhaseCalculator {
             F += 0.0161 * Math.sin(2 * M6) + 0.0104 * Math.sin(2 * B6)
             F -= 0.0074 * Math.sin(M5 - M6) - 0.0051 * Math.sin(M5 + M6)
             F += 0.0021 * Math.sin(2 * M5) + 0.0010 * Math.sin(2 * B6 - M6)
-            F += 0.5 / 1440;
-            oldJ = jday;
+            F += 0.5 / 1440
+            oldJ = jday
             jday = (J0 + 28 * phase + floor(F)).toInt()
             phase++
         }
-        return (thisJD - oldJ) % 30
+        return (thisJD - oldJ) % daysInCycle
     }
 
     fun getFrac(fr: Double): Double {
@@ -142,7 +142,7 @@ class PhaseCalculator {
             date.get(Calendar.DAY_OF_MONTH)
         )
         val jd = (2415020 + 28 * n) + i
-        return ((j1 - jd + 30) % 30)
+        return ((j1 - jd + daysInCycle) % daysInCycle)
     }
 
     private fun julday(year: Int, month: Int, day: Int): Double {
@@ -167,10 +167,9 @@ class PhaseCalculator {
 
         var phaseDay = 0
 
-        // sometimes rounded phase day omits 15
-        while (phaseDay != 15 && phaseDay != 16) {
+        while (phaseDay != 15) {
             phaseDay = calculatePhaseDay(algorithm, day).roundToInt()
-            if (phaseDay != 15 && phaseDay != 16) {
+            if (phaseDay != 15) {
                 day.add(Calendar.DAY_OF_MONTH, 1)
             }
         }
@@ -180,14 +179,23 @@ class PhaseCalculator {
         for (i in 1..13) {
             val fullMoon = Calendar.getInstance()
             fullMoon.set(
-                day.get(Calendar.YEAR),
-                day.get(Calendar.MONTH),
-                day.get(Calendar.DAY_OF_MONTH)
+                result.last().get(Calendar.YEAR),
+                result.last().get(Calendar.MONTH),
+                result.last().get(Calendar.DAY_OF_MONTH)
             )
-            fullMoon.add(Calendar.DAY_OF_MONTH, (daysInCycle * i).roundToInt())
+            fullMoon.add(Calendar.DAY_OF_MONTH, (daysInCycle).roundToInt() - 4)
 
-            if (fullMoon.get(Calendar.YEAR) == year) {
-                result.add(fullMoon)
+            for (a in 0..6)
+            {
+                fullMoon.add(Calendar.DAY_OF_MONTH, 1)
+
+                var phase = calculatePhaseDay(algorithm, fullMoon)
+                if (phase.roundToInt() == 15) {
+                    if (fullMoon.get(Calendar.YEAR) == year) {
+                        result.add(fullMoon)
+                    }
+                    break
+                }
             }
         }
 
