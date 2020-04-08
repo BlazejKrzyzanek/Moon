@@ -1,56 +1,61 @@
 package com.bkrz.moon
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import java.security.spec.RSAKeyGenParameterSpec.F0
 import java.util.*
 import kotlin.math.*
 
 
 class PhaseCalculator {
 
-    private val daysInCycle = 29
+    private val daysInCycle = 30.0
 
-    fun calculate(algorithm: Algorithm, date: Calendar): CalculationResult {
-        var phaseDay = 0.0
-
-        when (algorithm) {
-            Algorithm.SIMPLE -> phaseDay = simple(date)
-            Algorithm.CONWAY -> phaseDay = conway(date)
-            Algorithm.TRIG_1 -> phaseDay = trig1(date)
-            Algorithm.TRIG_2 -> phaseDay = trig2(date)
-        }
+    fun calculate(
+        algorithm: Algorithm,
+        date: Calendar,
+        hemisphereInFileName: String
+    ): CalculationResult {
+        val phaseDay = calculatePhaseDay(algorithm, date)
 
         return CalculationResult(
+            hemisphereInFileName + "_" + phaseDay.roundToInt(),
             floor(phaseDay.div(daysInCycle).times(100.0)).roundToInt(),
-            calculateLastNewMoonDate(date, round(phaseDay).roundToInt()),
-            calculateNextFullMoonDate(date, round(phaseDay).roundToInt())
+            calculateLastNewMoonDate(date, phaseDay),
+            calculateNextFullMoonDate(date, phaseDay)
         )
     }
 
-    private fun calculateNextFullMoonDate(date: Calendar, phaseDay: Int): Calendar {
-        val daysLeft: Int = if (phaseDay < 15) {
+    private fun calculatePhaseDay(algorithm: Algorithm, date: Calendar): Double {
+        return when (algorithm) {
+            Algorithm.SIMPLE -> simple(date)
+            Algorithm.CONWAY -> conway(date)
+            Algorithm.TRIG_1 -> trig1(date)
+            Algorithm.TRIG_2 -> trig2(date)
+        }
+    }
+
+    private fun calculateNextFullMoonDate(date: Calendar, phaseDay: Double): Calendar {
+        val daysLeft: Double = if (phaseDay < 15) {
             15 - phaseDay
         } else {
             daysInCycle.plus(15 - phaseDay)
         }
         val newDate = Calendar.getInstance()
         newDate.time = date.time
-        newDate.add(Calendar.DAY_OF_MONTH, daysLeft)
+        newDate.add(Calendar.DAY_OF_MONTH, daysLeft.roundToInt())
 
         return newDate
     }
 
-    private fun calculateLastNewMoonDate(date: Calendar, phaseDay: Int): Calendar {
+    private fun calculateLastNewMoonDate(date: Calendar, phaseDay: Double): Calendar {
         val newDate = Calendar.getInstance()
         newDate.time = date.time
-        newDate.add(Calendar.DAY_OF_MONTH, -1 * phaseDay)
+        newDate.add(Calendar.DAY_OF_MONTH, (-1 * phaseDay).roundToInt())
         return newDate
     }
 
     private fun simple(date: Calendar): Double {
         val lp = 2551443
         val newMoon = Calendar.getInstance()
-        newMoon.set(1970, 1, 7, 20, 35, 0)
+        newMoon.set(1970, 0, 7, 20, 35, 0)
         val phase = (date.timeInMillis - newMoon.timeInMillis) / 1000.0 % lp
 
         return (floor(phase / (24.0 * 3600.0)) + 1)
@@ -77,7 +82,7 @@ class PhaseCalculator {
     fun trig1(date: Calendar): Double {
         val thisJD = julday(
             date.get(Calendar.YEAR),
-            date.get(Calendar.MONTH),
+            date.get(Calendar.MONTH) + 1,
             date.get(Calendar.DAY_OF_MONTH)
         )
         val degToRad = 3.14159265 / 180
@@ -150,5 +155,39 @@ class PhaseCalculator {
             jul = jul + 2 - ja + floor(0.25 * ja)
         }
         return jul
+    }
+
+    fun calculateAllFullMoons(algorithm: Algorithm, year: Int): List<Calendar> {
+
+        val day = Calendar.getInstance()
+        day.set(year, 0, 1)
+
+        var phaseDay = 0
+
+        // sometimes rounded phase day omits 15
+        while (phaseDay != 15 && phaseDay != 16) {
+            phaseDay = calculatePhaseDay(algorithm, day).roundToInt()
+            if (phaseDay != 15 && phaseDay != 16) {
+                day.add(Calendar.DAY_OF_MONTH, 1)
+            }
+        }
+
+        val result = mutableListOf(day)
+
+        for (i in 1..13) {
+            val fullMoon = Calendar.getInstance()
+            fullMoon.set(
+                day.get(Calendar.YEAR),
+                day.get(Calendar.MONTH),
+                day.get(Calendar.DAY_OF_MONTH)
+            )
+            fullMoon.add(Calendar.DAY_OF_MONTH, (daysInCycle * i).roundToInt())
+
+            if (fullMoon.get(Calendar.YEAR) == year) {
+                result.add(fullMoon)
+            }
+        }
+
+        return result
     }
 }

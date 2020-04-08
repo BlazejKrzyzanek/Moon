@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="24dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_hemisphere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hemisphere_used" />
+
+    <RadioGroup
+        android:id="@+id/used_hemisphere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_N"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:tag="north"
+            android:text="@string/hemisphere_north" />
+
+        <RadioButton
+            android:id="@+id/radio_S"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="south"
+            android:text="@string/hemisphere_south" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/text_algorithm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/algorithm_used" />
+
+    <RadioGroup
+        android:id="@+id/used_algorithm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_simple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="simple"
+            android:text="@string/simple" />
+
+        <RadioButton
+            android:id="@+id/radio_conway"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="conway"
+            android:text="@string/conway" />
+
+        <RadioButton
+            android:id="@+id/radio_trig1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:tag="trig1"
+            android:text="@string/trig1" />
+
+        <RadioButton
+            android:id="@+id/radio_trig2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="trig2"
+            android:text="@string/trig2" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/save_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/save" />
+
+</LinearLayout>

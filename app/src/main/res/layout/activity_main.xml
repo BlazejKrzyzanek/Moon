@@ -31,8 +31,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:srcCompat="@drawable/s99_4p"
-        tools:srcCompat="@drawable/s19_7p_" />
+        app:srcCompat="@drawable/s_15"
+        tools:srcCompat="@drawable/s_15" />
 
     <TextView
         android:id="@+id/today_text"

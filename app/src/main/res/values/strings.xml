@@ -8,4 +8,15 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="_2020">2020</string>
+    <string name="settings">Ustawienia</string>
+    <string name="hemisphere_used">Używana półkula</string>
+    <string name="hemisphere_north">Północna</string>
+    <string name="hemisphere_south">Południowa</string>
+    <string name="algorithm_used">Używany algorytm</string>
+    <string name="simple">Simple</string>
+    <string name="conway">Conway</string>
+    <string name="trig1">Trig1</string>
+    <string name="trig2">Trig2</string>
+    <string name="save">Zapisz</string>
+    <string name="settings_saved">Zapisano ustawienia.</string>
 </resources>
