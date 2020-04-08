@@ -67,7 +67,7 @@ class PhaseCalculator {
         if (r > 9) {
             r -= 19
         }
-        r = r * 11 % 30 + date.get(Calendar.MONTH) + date.get(Calendar.DAY_OF_MONTH)
+        r = r * 11 % 30 + date.get(Calendar.MONTH) + 1 + date.get(Calendar.DAY_OF_MONTH)
         if (date.get(Calendar.MONTH) < 3) {
             r += 2
         }
@@ -124,7 +124,7 @@ class PhaseCalculator {
 
     fun trig2(date: Calendar): Double {
         val n =
-            floor(12.37 * (date.get(Calendar.YEAR) - 1900 + ((1.0 * (date.get(Calendar.MONTH)) - 0.5) / 12.0)))
+            floor(12.37 * (date.get(Calendar.YEAR) - 1900 + ((1.0 * (date.get(Calendar.MONTH) + 1) - 0.5) / 12.0)))
         val rad = 3.14159265 / 180.0
         val t = n / 1236.85
         val t2 = t * t
@@ -135,7 +135,7 @@ class PhaseCalculator {
         val i = if (xtra > 0.0) floor(xtra) else ceil(xtra - 1.0)
         val j1 = julday(
             date.get(Calendar.YEAR),
-            date.get(Calendar.MONTH),
+            date.get(Calendar.MONTH) + 1,
             date.get(Calendar.DAY_OF_MONTH)
         )
         val jd = (2415020 + 28 * n) + i
